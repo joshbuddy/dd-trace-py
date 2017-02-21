@@ -26,6 +26,9 @@ PATCH_MODULES = {
     'sqlite3': True,
     # TODO: it works if set to True?
     'aiohttp': False,  # requires asyncio (Python 3.4+)
+    'django': False,
+    'flask': False,
+    'pylons': False,
 }
 
 _LOCK = threading.Lock()
