@@ -24,7 +24,7 @@ test:
 
 deployment:
   dev:
-    branch: /(master)|(develop)/
+    branch: /(master)|(develop)|(async)/
     # CircleCI is configured to provide VERSION_SUFFIX=$CIRCLE_BRANCH$CIRCLE_BUILD_NUM
     commands:
       - pip install mkwheelhouse sphinx
