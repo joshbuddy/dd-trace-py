@@ -19,8 +19,7 @@ dependencies:
 
 test:
   override:
-    - rake test_parallel:
-        parallel: true
+    - echo "NO TESTS"
 
 deployment:
   dev:
