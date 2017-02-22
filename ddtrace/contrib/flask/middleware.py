@@ -24,7 +24,7 @@ class TraceMiddleware(object):
 
     def __init__(self, app, tracer, service="flask", use_signals=True):
         self.app = app
-        self.app.logger.info("initializing trace middleware")
+        log.info("initializing trace middleware")
 
         # save our traces.
         self._tracer = tracer
@@ -39,7 +39,7 @@ class TraceMiddleware(object):
         # warn the user if signals are unavailable (because blinker isn't
         # installed) if they are asking to use them.
         if use_signals and not signals.signals_available:
-            self.app.logger.info(_blinker_not_installed_msg)
+            log.info(_blinker_not_installed_msg)
         self.use_signals = use_signals and signals.signals_available
 
         # instrument request timings
@@ -98,7 +98,7 @@ class TraceMiddleware(object):
                 span_type=http.TYPE,
             )
         except Exception:
-            self.app.logger.exception("error tracing request")
+            log.exception("error tracing request")
 
     def _finish_span(self, response=None, exception=None):
         """ Close and finish the active span if it exists. """
@@ -140,7 +140,7 @@ class TraceMiddleware(object):
         try:
             self._finish_span(response=response)
         except Exception:
-            self.app.logger.exception("error finishing trace")
+            log.exception("error finishing trace")
         finally:
             return response
 
@@ -153,7 +153,7 @@ class TraceMiddleware(object):
         try:
             self._finish_span(response=response)
         except Exception:
-            self.app.logger.exception("error finishing trace")
+            log.exception("error finishing trace")
         return response
 
     def _request_exception(self, *args, **kwargs):
@@ -162,7 +162,7 @@ class TraceMiddleware(object):
         try:
             self._finish_span(exception=exception)
         except Exception:
-            self.app.logger.exception("error tracing error")
+            log.exception("error tracing error")
 
     def _template_started(self, sender, template, *args, **kwargs):
         span = self._tracer.trace('flask.template')
